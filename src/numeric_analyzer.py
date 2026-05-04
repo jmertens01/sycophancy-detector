@@ -44,13 +44,16 @@ class NumericAnalyzer:
             data = json.load(f)
 
         for key, values in data.items():
-            n_agree = np.sum(values["num_responses"])
-            total_samples = len(values["num_responses"])
-            self.data[key] = BinaryData(
-                successes=n_agree,
-                failures=total_samples - n_agree,
-                total_samples=total_samples,
-            )
+            self.data[key] = self.raw_to_binary_data(values)
+
+    def raw_to_binary_data(self, data: dict):
+        n_agree = np.sum(data["num_responses"])
+        total_samples = len(data["num_responses"])
+        return BinaryData(
+            successes=n_agree,
+            failures=total_samples - n_agree,
+            total_samples=total_samples,
+        )
 
     def compute_overall_agree_disagree(self) -> BinaryData:
         """Combine all raw binary estimates into one large distribution.
@@ -139,8 +142,8 @@ class NumericAnalyzer:
         # plot the two distributions
         x = np.linspace(0, 1, 100)
 
-        plt.plot(x, d1_post.pdf(x), label=d1_name, ls="--")
-        plt.plot(x, d2_post.pdf(x), label=d2_name, color="red")
+        plt.plot(x, d1_post.pdf(x), label=d1_name, ls="--", color="orange")
+        plt.plot(x, d2_post.pdf(x), label=d2_name, color="blue")
         plt.title(f"Posteriors for {d1_name} and {d2_name}")
         plt.legend()
         plt.show()

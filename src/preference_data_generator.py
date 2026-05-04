@@ -143,12 +143,15 @@ class PreferenceDataGenerator:
         nums = []
         for x in input_list:
             stem = x.split(" ")[0]
-            if "disagree" in stem:
+            if "disagree" in stem.lower():
                 nums.append(0)
-            elif "agree" in stem:
+            elif "agree" in stem.lower():
                 nums.append(1)
             else:
-                self.logger("Error processing %s", x)
+                self.logger.info(
+                    "Error processing %s",
+                    x,
+                )
 
         return nums
 
@@ -190,7 +193,12 @@ class PreferenceDataGenerator:
 
         return question_dict
 
-    def generate_all_open(self, statements: list[str], n_samples: int) -> None:
+    def generate_all_open(
+        self,
+        statements: list[str],
+        n_samples: int,
+        file_base: str,
+    ) -> None:
         """Generate all open responses for all statements.
 
         Arguments:
@@ -202,20 +210,21 @@ class PreferenceDataGenerator:
             None.
 
         """
-        open_question_dict_basic = self.open_for_all_qs(
-            statements,
-            n_samples,
-            "basic",
-        )
-        with Path("open_question_dict_basic_20.json").open("w") as f:
-            json.dump(open_question_dict_basic, f, indent=4)
+        for pressure_type in prompt_func_dict["binary"].keys():
+            open_question_dict = self.open_for_all_qs(
+                statements,
+                n_samples,
+                pressure_type,
+            )
+            with Path(f"{file_base}_{pressure_type}_{n_samples}.json").open("w") as f:
+                json.dump(open_question_dict, f, indent=4)
 
         positioned_open_dict = self.open_for_all_qs(
             statements,
             n_samples,
             "positioned",
         )
-        with Path("open_prompt_positioned_20.json").open("w") as f:
+        with Path(f"{file_base}_positioned_{n_samples}.json").open("w") as f:
             json.dump(positioned_open_dict, f, indent=4)
 
         pushy_open_dict = self.open_for_all_qs(
@@ -223,10 +232,15 @@ class PreferenceDataGenerator:
             n_samples,
             "positioned",
         )
-        with Path("open_prompt_pushy_20.json").open("w") as f:
+        with Path(f"{file_base}_pushy_{n_samples}.json").open("w") as f:
             json.dump(pushy_open_dict, f, indent=4)
 
-    def generate_all_binary(self, statements: list[str], n_samples: int) -> None:
+    def generate_all_binary(
+        self,
+        statements: list[str],
+        n_samples: int,
+        file_base: str,
+    ) -> None:
         """Generate all binary responses for all statements.
 
         Arguments:
@@ -238,36 +252,20 @@ class PreferenceDataGenerator:
             None.
 
         """
-        binary_question_dict_basic = self.binary_for_all_qs(
-            statements,
-            n_samples,
-            "basic",
-        )
-        with Path("binary_question_dict_basic_20.json").open("w") as f:
-            json.dump(binary_question_dict_basic, f, indent=4)
-
-        positioned_binary_dict = self.binary_for_all_qs(
-            statements,
-            n_samples,
-            "positioned",
-        )
-        with Path("binary_prompt_positioned_20.json").open("w") as f:
-            json.dump(positioned_binary_dict, f, indent=4)
-
-        pushy_binary_dict = self.binary_for_all_qs(
-            statements,
-            n_samples,
-            "positioned",
-        )
-        with Path("binary_prompt_pushy_20.json").open("w") as f:
-            json.dump(pushy_binary_dict, f, indent=4)
+        for pressure_type in prompt_func_dict["binary"].keys():
+            binary_question_dict = self.binary_for_all_qs(
+                statements,
+                n_samples,
+                pressure_type,
+            )
+            with Path(f"{file_base}_{pressure_type}_{n_samples}.json").open("w") as f:
+                json.dump(binary_question_dict, f, indent=4)
 
 
-def main() -> None:
+def main(statements_path: Path, stem: Optional[str] = "") -> None:
     """Generate data for preference analysis."""
     preference_data_generator = PreferenceDataGenerator()
-
-    with Path("preference_statements.json").open("r") as f:
+    with statements_path.open("r") as f:
         all_queries = json.load(f)
 
     statements = []
@@ -277,11 +275,19 @@ def main() -> None:
     n_samples = 1
 
     # Binary responses
-    preference_data_generator.generate_all_binary(statements, n_samples)
+    preference_data_generator.generate_all_binary(
+        statements,
+        n_samples,
+        f"{stem}binary",
+    )
 
     # Open responses
-    preference_data_generator.generate_all_open(statements, n_samples)
+    preference_data_generator.generate_all_open(
+        statements,
+        n_samples,
+        f"{stem}open",
+    )
 
 
 if __name__ == "__main__":
-    main()
+    main(Path("preference_statements.json"))

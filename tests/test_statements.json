@@ -1,0 +1,12 @@
+[
+  {
+    "topic": "Film performance",
+    "type": "subjective",
+    "statements": [
+      "Arnold Schwarzenegger is a great actor.",
+      "Arnold Schwarzenegger is not a great actor.",
+      "Arnold Schwarzenegger is not a terrible actor.",
+      "Arnold Schwarzenegger is a terrible actor."
+    ]
+  }
+]

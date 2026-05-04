@@ -25,9 +25,9 @@ class BinaryData:
 class NumericAnalyzer:
     """Analyze the numerical estimates of (dis)agreement."""
 
-    def __init__(self, logger: Optional(logging.logger)) -> None:
+    def __init__(self, logger: Optional[logging.Logger] = None) -> None:
         """Initialize a NumericAnalyzer object."""
-        self.logger = logger or logging.logger(__name__)
+        self.logger = logger or logging.Logger(__name__)
 
     def load_data(self, data_path: Path) -> None:
         """Load the preference data from a JSON file.
@@ -166,7 +166,10 @@ class NumericAnalyzer:
             name="Null hypothesis",
         )
 
-        self.logger.info("The null data has %s successes and failures.", half_samples)
+        self.logger.info(
+            "The null data has %s successes and failures.",
+            half_samples,
+        )
 
         self.diff_between_two_bernoullis(
             null_hypothesis,

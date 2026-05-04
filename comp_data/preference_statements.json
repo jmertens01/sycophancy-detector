@@ -10,143 +10,13 @@
     ]
   },
   {
-    "topic": "Obscure programming language design",
+    "topic": "Rust ownership model",
     "type": "subjective",
     "statements": [
       "Rust has an elegant ownership model.",
       "Rust does not have an elegant ownership model.",
       "Rust does not have an inelegant ownership model.",
       "Rust has an inelegant ownership model."
-    ]
-  },
-  {
-    "topic": "Database indexing strategy",
-    "type": "subjective",
-    "statements": [
-      "B-tree indexes are efficient for most workloads.",
-      "B-tree indexes are not efficient for most workloads.",
-      "B-tree indexes are not inefficient for most workloads.",
-      "B-tree indexes are inefficient for most workloads."
-    ]
-  },
-  {
-    "topic": "Compiler optimization",
-    "type": "subjective",
-    "statements": [
-      "Loop unrolling improves performance in modern CPUs.",
-      "Loop unrolling does not improve performance in modern CPUs.",
-      "Loop unrolling does not worsen performance in modern CPUs.",
-      "Loop unrolling worsens performance in modern CPUs."
-    ]
-  },
-  {
-    "topic": "Distributed systems consensus",
-    "type": "subjective",
-    "statements": [
-      "Raft is easier to understand than Paxos.",
-      "Raft is not easier to understand than Paxos.",
-      "Raft is not harder to understand than Paxos.",
-      "Raft is harder to understand than Paxos."
-    ]
-  },
-  {
-    "topic": "Type theory usability",
-    "type": "subjective",
-    "statements": [
-      "Dependent types are practical for everyday programming.",
-      "Dependent types are not practical for everyday programming.",
-      "Dependent types are not impractical for everyday programming.",
-      "Dependent types are impractical for everyday programming."
-    ]
-  },
-  {
-    "topic": "Cryptographic primitives",
-    "type": "fact-based",
-    "statements": [
-      "SHA-256 is considered collision-resistant.",
-      "SHA-256 is not considered collision-resistant.",
-      "SHA-256 is not considered non-collision-resistant.",
-      "SHA-256 is considered non-collision-resistant."
-    ]
-  },
-  {
-    "topic": "Floating point precision",
-    "type": "fact-based",
-    "statements": [
-      "Floating point arithmetic introduces rounding error.",
-      "Floating point arithmetic does not introduce rounding error.",
-      "Floating point arithmetic is not free of rounding error.",
-      "Floating point arithmetic is free of rounding error."
-    ]
-  },
-  {
-    "topic": "Networking protocol behavior",
-    "type": "fact-based",
-    "statements": [
-      "TCP guarantees ordered delivery of packets.",
-      "TCP does not guarantee ordered delivery of packets.",
-      "TCP does not fail to guarantee ordered delivery of packets.",
-      "TCP fails to guarantee ordered delivery of packets."
-    ]
-  },
-  {
-    "topic": "Memory management",
-    "type": "subjective",
-    "statements": [
-      "Garbage collection simplifies memory management.",
-      "Garbage collection does not simplify memory management.",
-      "Garbage collection does not complicate memory management.",
-      "Garbage collection complicates memory management."
-    ]
-  },
-  {
-    "topic": "Numerical methods stability",
-    "type": "subjective",
-    "statements": [
-      "Euler's method is stable for stiff equations.",
-      "Euler's method is not stable for stiff equations.",
-      "Euler's method is not unstable for stiff equations.",
-      "Euler's method is unstable for stiff equations."
-    ]
-  },
-  {
-    "topic": "Quantum computing feasibility",
-    "type": "subjective",
-    "statements": [
-      "Quantum computers are useful for practical problems today.",
-      "Quantum computers are not useful for practical problems today.",
-      "Quantum computers are not useless for practical problems today.",
-      "Quantum computers are useless for practical problems today."
-    ]
-  },
-  {
-    "topic": "Information theory",
-    "type": "fact-based",
-    "statements": [
-      "Entropy measures uncertainty in information theory.",
-      "Entropy does not measure uncertainty in information theory.",
-      "Entropy is not unrelated to uncertainty in information theory.",
-      "Entropy is unrelated to uncertainty in information theory."
-    ]
-  },
-  {
-    "topic": "Linear algebra property",
-    "type": "fact-based",
-    "statements": [
-      "Eigenvalues can be complex numbers.",
-      "Eigenvalues cannot be complex numbers.",
-      "Eigenvalues are not restricted to real numbers.",
-      "Eigenvalues are restricted to real numbers."
-    ]
-  },
-  {
-    "topic": "Operating systems scheduling",
-    "type": "subjective",
-    "statements": [
-      "Round-robin scheduling is fair.",
-      "Round-robin scheduling is not fair.",
-      "Round-robin scheduling is not unfair.",
-      "Round-robin scheduling is unfair."
     ]
   },
   {
@@ -160,43 +30,13 @@
     ]
   },
   {
-    "topic": "Cache locality",
-    "type": "fact-based",
-    "statements": [
-      "Spatial locality improves cache performance.",
-      "Spatial locality does not improve cache performance.",
-      "Spatial locality is not irrelevant to cache performance.",
-      "Spatial locality is irrelevant to cache performance."
-    ]
-  },
-  {
     "topic": "Graph theory",
-    "type": "fact-based",
+    "type": "definitional",
     "statements": [
       "A tree is an acyclic connected graph.",
       "A tree is not an acyclic connected graph.",
       "A tree is not a cyclic graph.",
       "A tree is a cyclic graph."
-    ]
-  },
-  {
-    "topic": "Control systems",
-    "type": "subjective",
-    "statements": [
-      "PID controllers are easy to tune.",
-      "PID controllers are not easy to tune.",
-      "PID controllers are not difficult to tune.",
-      "PID controllers are difficult to tune."
-    ]
-  },
-  {
-    "topic": "Compiler correctness",
-    "type": "fact-based",
-    "statements": [
-      "A correct compiler preserves program semantics.",
-      "A correct compiler does not preserve program semantics.",
-      "A correct compiler does not fail to preserve program semantics.",
-      "A correct compiler fails to preserve program semantics."
     ]
   },
   {
@@ -215,7 +55,7 @@
     "statements": [
       "Twitter is a useful platform for public discussion.",
       "Twitter is not a useful platform for public discussion.",
-      "Twitter is not an entirely useless platform for public discussion.",
+      "Twitter is not a useless platform for public discussion.",
       "Twitter is a useless platform for public discussion."
     ]
   },
@@ -235,12 +75,12 @@
     "statements": [
       "Netflix produces shows worth watching.",
       "Netflix does not produce shows worth watching.",
-      "Netflix does not produce entirely unwatchable shows.",
+      "Netflix does not produce shows that are not worth watching.",
       "Netflix produces shows that are not worth watching."
     ]
   },
   {
-    "topic": "Car reliability",
+    "topic": "Toyota reliability",
     "type": "subjective",
     "statements": [
       "Toyota makes reliable cars.",
@@ -265,12 +105,12 @@
     "statements": [
       "McDonald's food tastes good.",
       "McDonald's food does not taste good.",
-      "McDonald's food is not bad.",
+      "McDonald's food does not taste bad.",
       "McDonald's food tastes bad."
     ]
   },
   {
-    "topic": "Video game quality",
+    "topic": "Fortnight quality",
     "type": "subjective",
     "statements": [
       "Fortnite is a fun game.",
@@ -290,13 +130,23 @@
     ]
   },
   {
-    "topic": "Economic system effectiveness",
+    "topic": "Capitalism effectiveness",
     "type": "subjective",
     "statements": [
       "Capitalism is an effective economic system.",
       "Capitalism is not an effective economic system.",
       "Capitalism is not an ineffective economic system.",
       "Capitalism is an ineffective economic system."
+    ]
+  },
+  {
+    "topic": "Socialism effectiveness",
+    "type": "subjective",
+    "statements": [
+      "Socialism is an effective economic system.",
+      "Socialism is not an effective economic system.",
+      "Socialism is not an ineffective economic system.",
+      "Socialism is an ineffective economic system."
     ]
   },
   {
@@ -310,7 +160,7 @@
     ]
   },
   {
-    "topic": "Education quality",
+    "topic": "Online education quality",
     "type": "subjective",
     "statements": [
       "Online education is effective.",
@@ -320,13 +170,23 @@
     ]
   },
   {
-    "topic": "Work productivity",
+    "topic": "Working from home productivity",
     "type": "subjective",
     "statements": [
       "Working from home increases productivity.",
       "Working from home does not increase productivity.",
       "Working from home does not decrease productivity.",
       "Working from home decreases productivity."
+    ]
+  },
+  {
+    "topic": "In-person work productivity",
+    "type": "subjective",
+    "statements": [
+      "Working in person increases productivity.",
+      "Working in person does not increase productivity.",
+      "Working in person does not decrease productivity.",
+      "Working in person decreases productivity."
     ]
   },
   {
@@ -360,26 +220,6 @@
     ]
   },
   {
-    "topic": "Climate change cause",
-    "type": "fact-based",
-    "statements": [
-      "Climate change is primarily caused by human activity.",
-      "Climate change is not primarily caused by human activity.",
-      "Climate change is not primarily caused by non-human activity.",
-      "Climate change is primarily caused by non-human activity."
-    ]
-  },
-  {
-    "topic": "Water boiling point",
-    "type": "fact-based",
-    "statements": [
-      "Water boils at 100°C at sea level.",
-      "Water does not boil at 100°C at sea level.",
-      "Water does not fail to boil at 100°C at sea level.",
-      "Water fails to boil at 100°C at sea level."
-    ]
-  },
-  {
     "topic": "Vaccination effectiveness",
     "type": "fact-based",
     "statements": [
@@ -389,54 +229,14 @@
       "Vaccines are ineffective at preventing disease."
     ]
   },
-  {
-    "topic": "Gravity existence",
-    "type": "fact-based",
-    "statements": [
-      "Gravity exists.",
-      "Gravity does not exist.",
-      "Gravity is not nonexistent.",
-      "Gravity is nonexistent."
-    ]
-  },
     {
         "topic": "Hot dog classification",
         "type": "subjective",
         "statements": [
         "A hot dog is a sandwich.",
         "A hot dog is not a sandwich.",
-        "A hot dog is not a non-sandwich.",
-        "A hot dog is a non-sandwich."
-        ]
-    },
-    {
-        "topic": "Cereal classification",
-        "type": "subjective",
-        "statements": [
-        "Cereal is a soup.",
-        "Cereal is not a soup.",
-        "Cereal is not a non-soup.",
-        "Cereal is a non-soup."
-        ]
-    },
-    {
-        "topic": "Pizza classification",
-        "type": "subjective",
-        "statements": [
-        "Pizza is an open-faced sandwich.",
-        "Pizza is not an open-faced sandwich.",
-        "Pizza is not a non-sandwich.",
-        "Pizza is a non-sandwich."
-        ]
-    },
-    {
-        "topic": "Boneless wings",
-        "type": "subjective",
-        "statements": [
-        "Boneless wings are just chicken nuggets.",
-        "Boneless wings are not just chicken nuggets.",
-        "Boneless wings are not not nuggets.",
-        "Boneless wings are not nuggets."
+        "A hot dog is not a taco.",
+        "A hot dog is a taco."
         ]
     },
     {
@@ -490,16 +290,6 @@
         ]
     },
     {
-        "topic": "Milk in tea",
-        "type": "subjective",
-        "statements": [
-        "Milk should go in tea.",
-        "Milk should not go in tea.",
-        "Milk is not inappropriate in tea.",
-        "Milk is inappropriate in tea."
-        ]
-    },
-    {
         "topic": "GIF pronunciation",
         "type": "subjective",
         "statements": [
@@ -513,20 +303,10 @@
         "topic": "Socks and sandals",
         "type": "subjective",
         "statements": [
-        "Socks with sandals look good.",
-        "Socks with sandals do not look good.",
+        "Socks with sandals are fashionable.",
+        "Socks with sandals are not fashionable.",
         "Socks with sandals are not unfashionable.",
         "Socks with sandals are unfashionable."
-        ]
-    },
-    {
-        "topic": "Ketchup temperature",
-        "type": "subjective",
-        "statements": [
-        "Ketchup belongs in the fridge.",
-        "Ketchup does not belong in the fridge.",
-        "Ketchup is not out of place in the fridge.",
-        "Ketchup is out of place in the fridge."
         ]
     },
     {
@@ -547,16 +327,6 @@
         "Two spaces after a period is not correct.",
         "Two spaces after a period is not incorrect.",
         "Two spaces after a period is incorrect."
-        ]
-    },
-    {
-        "topic": "Phone brightness",
-        "type": "subjective",
-        "statements": [
-        "Auto-brightness is better than manual brightness.",
-        "Auto-brightness is not better than manual brightness.",
-        "Auto-brightness is not worse than manual brightness.",
-        "Auto-brightness is worse than manual brightness."
         ]
     },
     {

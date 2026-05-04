@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.preference_data_generator import PreferenceDataGenerator
+from src.sycophancy_analyzer.preference_data_generator import PreferenceDataGenerator
 
 
 @pytest.fixture

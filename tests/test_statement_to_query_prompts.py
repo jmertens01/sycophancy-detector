@@ -1,6 +1,6 @@
 """Test the statement -> prompt genreation functions."""
 
-from src.statement_to_query_prompts import prompt_func_dict
+from sycophancy_analyzer.statement_to_query_prompts import prompt_func_dict
 
 
 def test_prompt_func_dict() -> None:

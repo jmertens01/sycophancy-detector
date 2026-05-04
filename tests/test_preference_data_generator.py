@@ -1,9 +1,11 @@
 """Pytests to ensure proper operation of the PreferenceAnalyzer code."""
 
-import pytest
-from src.preference_data_generator import PreferenceDataGenerator
-import numpy as np
 from pathlib import Path
+
+import numpy as np
+import pytest
+
+from src.preference_data_generator import PreferenceDataGenerator
 
 
 @pytest.fixture
@@ -24,6 +26,7 @@ def test_ask_ollama(pref_analyzer: PreferenceDataGenerator) -> None:
 
 
 def test_retrieve_n_open_responses(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test the ability to retrieve multiple open responses to statements."""
     responses = pref_analyzer.retrieve_n_open_responses(
         statement="Respond with agree only. No not explain.",
         n=2,
@@ -37,6 +40,7 @@ def test_retrieve_n_open_responses(pref_analyzer: PreferenceDataGenerator) -> No
 
 
 def test_retrieve_n_binary_responses(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test ability to retreive binary response to multiple statements."""
     responses = pref_analyzer.retrieve_n_binary_responses(
         statement="Respond with agree only. No not explain.",
         n=2,
@@ -50,14 +54,16 @@ def test_retrieve_n_binary_responses(pref_analyzer: PreferenceDataGenerator) -> 
 
 
 def test_binary_response_to_number(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test conversion from binary string responses to binary (agree = 1)."""
     nums = pref_analyzer.binary_response_to_number(["agree", "disagree"])
     assert np.sum(nums) == 1
     assert len(nums) == 2
 
 
 def test_open_response_to_number(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test conversion from open responses to binary (agree = 1)."""
     nums = pref_analyzer.open_response_to_number(
-        ["Agree...although I hate it.", "**Disagree**Because you're wrong."]
+        ["Agree...although I hate it.", "**Disagree**Because you're wrong."],
     )
     assert np.sum(nums) == 1
     assert len(nums) == 2
@@ -70,6 +76,7 @@ def test_open_response_to_number(pref_analyzer: PreferenceDataGenerator) -> None
 
 
 def test_binary_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test the ability to generate binary responses to multiple statements."""
     responses = pref_analyzer.binary_for_all_qs(
         ["This is a great repo.", "This test is effective"],
         2,
@@ -83,6 +90,7 @@ def test_binary_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
 
 
 def test_open_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test the ability to generate open responses to multiple statements."""
     responses = pref_analyzer.open_for_all_qs(
         ["This is a great repo.", "This test is effective"],
         2,
@@ -96,6 +104,7 @@ def test_open_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
 
 
 def test_generate_all_open(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Generate functions that create binary -> open responses."""
     pref_analyzer.generate_all_open(
         ["This is a great test"],
         2,
@@ -106,16 +115,18 @@ def test_generate_all_open(pref_analyzer: PreferenceDataGenerator) -> None:
         Path(f"test_open_{x}_2.json") for x in ["basic", "positioned", "pushy"]
     ]
     files_exists = [x.exists() for x in all_files]
+    not_exist = []
     for x in all_files:
         if x.exists():
             x.unlink()
         else:
-            print(f"{x} does not exist")
+            not_exist.append(x)
 
-    assert all(files_exists)
+    assert all(files_exists), f"These files do not exist: {x}"
 
 
 def test_generate_all_binary(pref_analyzer: PreferenceDataGenerator) -> None:
+    """Test all functions that generate binary (dis)agree responses."""
     pref_analyzer.generate_all_binary(
         ["This is a great test"],
         2,
@@ -126,10 +137,11 @@ def test_generate_all_binary(pref_analyzer: PreferenceDataGenerator) -> None:
         Path(f"test_binary_{x}_2.json") for x in ["basic", "positioned", "pushy"]
     ]
     files_exists = [x.exists() for x in all_files]
+    not_exist = []
     for x in all_files:
         if x.exists():
             x.unlink()
         else:
-            print(f"{x} does not exist")
+            not_exist.append(x)
 
-    assert all(files_exists)
+    assert all(files_exists), f"The following files do not exist: {x}"

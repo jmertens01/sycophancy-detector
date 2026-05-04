@@ -3,7 +3,6 @@
 import json
 import logging
 from pathlib import Path
-from typing import Optional
 
 import numpy as np
 from ollama import ChatResponse, chat
@@ -15,9 +14,9 @@ from src.statement_to_query_prompts import prompt_func_dict
 class PreferenceDataGenerator:
     """Prompt an LLM in ways that will highlight sycophancy."""
 
-    def __init__(self, logger: Optional[logging.Logger] = None) -> None:
+    def __init__(self, logger: logging.Logger | None = None) -> None:
         """Initialize a preference data generator object."""
-        self.logger = logger or logging.Logger(__name__)
+        self.logger = logger or logging.getLogger(__name__)
 
     def ask_ollama(self, prompt: str) -> ChatResponse:
         """Request a response from Ollama.
@@ -41,7 +40,11 @@ class PreferenceDataGenerator:
         return response
 
     def retrieve_n_open_responses(
-        self, statement: str, n: int, pressure: str, tries_per_query: int = 3
+        self,
+        statement: str,
+        n: int,
+        pressure: str,
+        tries_per_query: int = 3,
     ) -> list[str]:
         """Sample a set of open-ended LLM responses to a statement.
 
@@ -155,8 +158,20 @@ class PreferenceDataGenerator:
 
         return nums
 
-    def binary_for_all_qs(self, statements: list, n: int, pressure: str) -> dict:
-        """Generate binary responses (dis/agree) for a list of statements."""
+    def binary_for_all_qs(self, statements: list[str], n: int, pressure: str) -> dict:
+        """Generate binary responses (dis/agree) for a list of statements.
+
+        Arguments:
+            statements (list): A list of statements to convert into queries
+               to prompt the LLM.
+            n (int): The number of times to query the LLM, per statement.
+            pressure (str): The level of pressure to put on the LLM to agree,
+               must align with the prompt_func_dict in statement_to_query_prompts.py.
+
+        Returns:
+            Dictionary of the LLM's responses to each statements.
+
+        """
         question_dict = {}
 
         for question in tqdm(statements, "Retrieving Ollama responses"):
@@ -174,8 +189,20 @@ class PreferenceDataGenerator:
 
         return question_dict
 
-    def open_for_all_qs(self, statements: list, n: int, pressure: str) -> dict:
-        """Generate open-ended LLM responses to a list of statements."""
+    def open_for_all_qs(self, statements: list[str], n: int, pressure: str) -> dict:
+        """Generate open-ended LLM responses to a list of statements.
+
+        Arguments:
+            statements (list): A list of statements to convert into queries
+               to prompt the LLM.
+            n (int): The number of times to query the LLM, per statement.
+            pressure (str): The level of pressure to put on the LLM to agree,
+               must align with the prompt_func_dict in statement_to_query_prompts.py.
+
+        Returns:
+            Dictionary of the LLM's responses to each statements.
+
+        """
         question_dict = {}
 
         for question in tqdm(statements, "Retrieving Ollama responses"):
@@ -205,12 +232,13 @@ class PreferenceDataGenerator:
             statements (list[str]): A list of statements to respond to.
             n_samples (int): The number of times to sample the LLMs response per
                statement.
+            file_base (str): The start of the file to produce for each output.
 
         Returns:
             None.
 
         """
-        for pressure_type in prompt_func_dict["binary"].keys():
+        for pressure_type in prompt_func_dict["binary"]:
             open_question_dict = self.open_for_all_qs(
                 statements,
                 n_samples,
@@ -247,12 +275,13 @@ class PreferenceDataGenerator:
             statements (list[str]): A list of statements to respond to.
             n_samples (int): The number of times to sample the LLMs response per
                statement.
+            file_base (str): The start of the file to produce for each output.
 
         Returns:
             None.
 
         """
-        for pressure_type in prompt_func_dict["binary"].keys():
+        for pressure_type in prompt_func_dict["binary"]:
             binary_question_dict = self.binary_for_all_qs(
                 statements,
                 n_samples,
@@ -262,8 +291,20 @@ class PreferenceDataGenerator:
                 json.dump(binary_question_dict, f, indent=4)
 
 
-def main(statements_path: Path, stem: Optional[str] = "") -> None:
-    """Generate data for preference analysis."""
+def main(statements_path: Path, stem: str | None = "") -> None:
+    """Generate data for preference analysis.
+
+    Saves the data locally.
+
+    Arguments:
+        statements_path (Path): Path to a json file that contains
+           the statements to use to generate prompts.
+        stem (str, Optional): A stem to add to output files.
+
+    Returns:
+        None.
+
+    """
     preference_data_generator = PreferenceDataGenerator()
     with statements_path.open("r") as f:
         all_queries = json.load(f)

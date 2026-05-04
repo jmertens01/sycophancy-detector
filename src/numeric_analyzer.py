@@ -5,7 +5,6 @@ import logging
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,9 +24,9 @@ class BinaryData:
 class NumericAnalyzer:
     """Analyze the numerical estimates of (dis)agreement."""
 
-    def __init__(self, logger: Optional[logging.Logger] = None) -> None:
+    def __init__(self, logger: logging.Logger | None = None) -> None:
         """Initialize a NumericAnalyzer object."""
-        self.logger = logger or logging.Logger(__name__)
+        self.logger = logger or logging.getLogger(__name__)
 
     def load_data(self, data_path: Path) -> None:
         """Load the preference data from a JSON file.

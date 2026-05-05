@@ -11,7 +11,10 @@ from src.sycophancy_analyzer.preference_data_generator import PreferenceDataGene
 @pytest.fixture
 def pref_analyzer() -> PreferenceDataGenerator:
     """Create a PreferenceAnalyzer to use throughout tests."""
-    return PreferenceDataGenerator()
+    pref_analyzer = PreferenceDataGenerator()
+    pref_analyzer.statements = ["This is a great test."]
+
+    return pref_analyzer
 
 
 def test_ask_ollama(pref_analyzer: PreferenceDataGenerator) -> None:
@@ -106,13 +109,14 @@ def test_open_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
 def test_generate_all_open(pref_analyzer: PreferenceDataGenerator) -> None:
     """Generate functions that create binary -> open responses."""
     pref_analyzer.generate_all_open(
-        ["This is a great test"],
         2,
         "test_open",
+        Path.cwd() / "tests",
     )
 
     all_files = [
-        Path(f"test_open_{x}_2.json") for x in ["basic", "positioned", "pushy"]
+        Path(Path.cwd() / "tests" / f"test_open_{x}_2.json")
+        for x in ["basic", "positioned", "pushy"]
     ]
     files_exists = [x.exists() for x in all_files]
     not_exist = []
@@ -128,15 +132,18 @@ def test_generate_all_open(pref_analyzer: PreferenceDataGenerator) -> None:
 def test_generate_all_binary(pref_analyzer: PreferenceDataGenerator) -> None:
     """Test all functions that generate binary (dis)agree responses."""
     pref_analyzer.generate_all_binary(
-        ["This is a great test"],
         2,
         "test_binary",
+        Path.cwd() / "tests",
     )
 
     all_files = [
-        Path(f"test_binary_{x}_2.json") for x in ["basic", "positioned", "pushy"]
+        Path(Path.cwd() / "tests" / f"test_binary_{x}_2.json")
+        for x in ["basic", "positioned", "pushy", "helpful"]
     ]
+
     files_exists = [x.exists() for x in all_files]
+
     not_exist = []
     for x in all_files:
         if x.exists():

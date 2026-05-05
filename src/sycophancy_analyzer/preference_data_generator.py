@@ -3,6 +3,7 @@
 import json
 import logging
 from pathlib import Path
+from typing import Optional
 
 import numpy as np
 from ollama import ChatResponse, chat
@@ -159,7 +160,11 @@ class PreferenceDataGenerator:
 
         return nums
 
-    def binary_for_all_qs(self, statements: list[str], n: int, pressure: str) -> dict:
+    def binary_for_all_qs(
+        self,
+        n: int,
+        pressure: str,
+    ) -> dict:
         """Generate binary responses (dis/agree) for a list of statements.
 
         Arguments:
@@ -175,7 +180,7 @@ class PreferenceDataGenerator:
         """
         question_dict = {}
 
-        for question in tqdm(statements, "Retrieving Ollama responses"):
+        for question in tqdm(self.statements, "Retrieving Ollama responses"):
             str_responses = self.retrieve_n_binary_responses(
                 question,
                 n=n,
@@ -190,7 +195,11 @@ class PreferenceDataGenerator:
 
         return question_dict
 
-    def open_for_all_qs(self, statements: list[str], n: int, pressure: str) -> dict:
+    def open_for_all_qs(
+        self,
+        n: int,
+        pressure: str,
+    ) -> dict:
         """Generate open-ended LLM responses to a list of statements.
 
         Arguments:
@@ -206,7 +215,7 @@ class PreferenceDataGenerator:
         """
         question_dict = {}
 
-        for question in tqdm(statements, "Retrieving Ollama responses"):
+        for question in tqdm(self.statements, "Retrieving Ollama responses"):
             str_responses = self.retrieve_n_open_responses(
                 question,
                 n=n,
@@ -223,9 +232,9 @@ class PreferenceDataGenerator:
 
     def generate_all_open(
         self,
-        statements: list[str],
         n_samples: int,
         file_base: str,
+        output_dir: Optional[Path] = None,
     ) -> None:
         """Generate all open responses for all statements.
 
@@ -239,35 +248,21 @@ class PreferenceDataGenerator:
             None.
 
         """
-        for pressure_type in prompt_func_dict["binary"]:
+        for pressure_type in prompt_func_dict["bin_open"]:
             open_question_dict = self.open_for_all_qs(
-                statements,
                 n_samples,
                 pressure_type,
             )
-            with Path(f"{file_base}_{pressure_type}_{n_samples}.json").open("w") as f:
+            with Path(
+                output_dir / f"{file_base}_{pressure_type}_{n_samples}.json"
+            ).open("w") as f:
                 json.dump(open_question_dict, f, indent=4)
-
-        positioned_open_dict = self.open_for_all_qs(
-            statements,
-            n_samples,
-            "positioned",
-        )
-        with Path(f"{file_base}_positioned_{n_samples}.json").open("w") as f:
-            json.dump(positioned_open_dict, f, indent=4)
-
-        pushy_open_dict = self.open_for_all_qs(
-            statements,
-            n_samples,
-            "positioned",
-        )
-        with Path(f"{file_base}_pushy_{n_samples}.json").open("w") as f:
-            json.dump(pushy_open_dict, f, indent=4)
 
     def generate_all_binary(
         self,
         n_samples: int,
         file_base: str,
+        output_dir: Optional[Path] = None,
     ) -> None:
         """Generate all binary responses for all statements.
 
@@ -283,13 +278,13 @@ class PreferenceDataGenerator:
         """
         for pressure_type in prompt_func_dict["binary"]:
             binary_question_dict = self.binary_for_all_qs(
-                self.statements,
                 n_samples,
                 pressure_type,
             )
-            with Path(f"comp_data/{file_base}_{pressure_type}_{n_samples}.json").open(
-                "w"
-            ) as f:
+
+            with Path(
+                output_dir / f"{file_base}_{pressure_type}_{n_samples}.json"
+            ).open("w") as f:
                 json.dump(binary_question_dict, f, indent=4)
 
     def read_json_statements(self, statements_path: Path) -> None:
@@ -328,5 +323,4 @@ def main(statements_path: Path, stem: str | None = "") -> None:
 
 
 if __name__ == "__main__":
-    print(Path.cwd())
     main(Path("comp_data/preference_statements.json"))

@@ -64,7 +64,7 @@ class NumericAnalyzer:
                 "polarity": polarity,
                 "question": question,
                 "binary_int_responses": binary_int_responses_basic,
-            }
+            },
         )
         self.data["prop_agree"] = [
             np.mean(x) for x in self.data["binary_int_responses"]
@@ -195,7 +195,7 @@ class NumericAnalyzer:
             None.
 
         """
-        test_data = self.compute_overall_agree_disagree(data_col)
+        test_data = self.compute_bernoulli(data_col)
         half_samples = math.floor(test_data.total_samples) / 2
 
         null_hypothesis = BinaryData(

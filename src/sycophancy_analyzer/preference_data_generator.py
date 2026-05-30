@@ -25,6 +25,7 @@ class PreferenceDataGenerator:
 
         Arguments:
             prompt (str): The prompt to send ollama.
+            model (str): The model to use (must be downloaded).
 
         Returns:
             Ollama's response.
@@ -104,7 +105,6 @@ class PreferenceDataGenerator:
         """
         i = 0
         responses = []
-        print(f"{pressure = }")
         query = prompt_func_dict["binary"][pressure](statement)
         while i < n:
             response = ""
@@ -179,10 +179,8 @@ class PreferenceDataGenerator:
             Dictionary of the LLM's responses to each statements.
 
         """
-        print(f"{pressure = }")
         all_str_responses = []
         all_bin_responses = []
-        print(self.statements)
         for _, question_cat in tqdm(
             self.statements.iterrows(),
             "Retrieving Ollama responses",
@@ -245,10 +243,10 @@ class PreferenceDataGenerator:
         """Generate all open responses for all statements.
 
         Arguments:
-            statements (list[str]): A list of statements to respond to.
             n_samples (int): The number of times to sample the LLMs response per
                statement.
             file_base (str): The start of the file to produce for each output.
+            output_dir (Path, Optional): Where to save output.
 
         Returns:
             None.
@@ -273,10 +271,10 @@ class PreferenceDataGenerator:
         """Generate all binary responses for all statements.
 
         Arguments:
-            statements (list[str]): A list of statements to respond to.
             n_samples (int): The number of times to sample the LLMs response per
                statement.
             file_base (str): The start of the file to produce for each output.
+            output_dir (Path): Where to save temporary files.
 
         Returns:
             None.
@@ -294,7 +292,8 @@ class PreferenceDataGenerator:
             ).open("w") as f:
                 json.dump(intermed, f, indent=4)
 
-    def json_to_statements(self, data) -> None:
+    def json_to_statements(self, data: list[dict]) -> None:
+        """Convert a loaded json file into self.statements."""
         topic_list = []
         position_list = []
         q_type_list = []
@@ -336,22 +335,33 @@ class PreferenceDataGenerator:
         query: str,
         n_samples: int = 5,
     ) -> pd.DataFrame:
-        direct = self.run_one_usr_query_bin(
-            query=query, pressure="basic", samples=n_samples
+        """Retrieve all binary responses for one single query."""
+        direct = self.retrieve_n_binary_responses(
+            query,
+            n_samples,
+            "basic",
         )
         direct_num = self.binary_response_to_number(direct)
 
-        positioned = self.run_one_usr_query_bin(
-            query=query, pressure="positioned", samples=n_samples
+        positioned = self.retrieve_n_binary_responses(
+            query,
+            n_samples,
+            "positioned",
         )
         positioned_num = self.binary_response_to_number(positioned)
 
-        pushy = self.run_one_usr_query_bin(
-            query=query, pressure="pushy", samples=n_samples
+        pushy = self.retrieve_n_binary_responses(
+            query,
+            n_samples,
+            "pushy",
         )
         pushy_num = self.binary_response_to_number(pushy)
 
-        we = self.run_one_usr_query_bin(query=query, pressure="we", samples=n_samples)
+        we = self.retrieve_n_binary_responses(
+            query,
+            n_samples,
+            "we",
+        )
         we_num = self.binary_response_to_number(we)
 
         return pd.DataFrame(
@@ -365,20 +375,6 @@ class PreferenceDataGenerator:
                 ],
             },
         )
-
-    def run_one_usr_query_bin(
-        self,
-        query: str,
-        pressure: str,
-        samples: int = 10,
-    ):
-        """Run binary response for one user query."""
-        answers = self.retrieve_n_binary_responses(
-            query,
-            samples,
-            pressure,
-        )
-        return answers
 
 
 def main(statements_path: Path, stem: str | None = "") -> None:

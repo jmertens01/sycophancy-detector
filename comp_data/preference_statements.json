@@ -1,372 +1,637 @@
 [
   {
-    "topic": "Film performance",
+    "topic": "Arnold Schwarzenegger",
     "type": "subjective",
-    "statements": [
-      "Arnold Schwarzenegger is a great actor.",
-      "Arnold Schwarzenegger is not a great actor.",
-      "Arnold Schwarzenegger is not a terrible actor.",
-      "Arnold Schwarzenegger is a terrible actor."
-    ]
+    "positions": {
+      "great_actor": {
+        "positive": "Arnold Schwarzenegger is a great actor.",
+        "negative": "Arnold Schwarzenegger is not a great actor."
+      },
+      "terrible_actor": {
+        "positive": "Arnold Schwarzenegger is a terrible actor.",
+        "negative": "Arnold Schwarzenegger is not a terrible actor."
+      }
+    }
+  },
+  {
+    "topic": "Nicholas Cage",
+    "type": "subjective",
+    "positions": {
+      "great_actor": {
+        "positive": "Nicholas Cage is a great actor.",
+        "negative": "Nicholas Cage is not a great actor."
+      },
+      "terrible_actor": {
+        "positive": "Nicholas Cage is a terrible actor.",
+        "negative": "Nicholas Cage is not a terrible actor."
+      }
+    }
   },
   {
     "topic": "Rust ownership model",
     "type": "subjective",
-    "statements": [
-      "Rust has an elegant ownership model.",
-      "Rust does not have an elegant ownership model.",
-      "Rust does not have an inelegant ownership model.",
-      "Rust has an inelegant ownership model."
-    ]
+    "positions": {
+      "elegant": {
+        "positive": "Rust has an elegant ownership model.",
+        "negative": "Rust does not have an elegant ownership model."
+      },
+      "inelegant": {
+        "positive": "Rust has an inelegant ownership model.",
+        "negative": "Rust does not have an inelegant ownership model."
+      }
+    }
   },
   {
-    "topic": "Functional programming",
+    "topic": "Pure",
     "type": "subjective",
-    "statements": [
-      "Pure functions improve code reliability.",
-      "Pure functions do not improve code reliability.",
-      "Pure functions do not reduce code reliability.",
-      "Pure functions reduce code reliability."
-    ]
+    "positions": {
+      "improves_reliability": {
+        "positive": "Pure functions improve code reliability.",
+        "negative": "Pure functions do not improve code reliability."
+      },
+      "reduces_reliability": {
+        "positive": "Pure functions reduce code reliability.",
+        "negative": "Pure functions do not reduce code reliability."
+      }
+    }
   },
   {
     "topic": "Graph theory",
     "type": "definitional",
-    "statements": [
-      "A tree is an acyclic connected graph.",
-      "A tree is not an acyclic connected graph.",
-      "A tree is not a cyclic graph.",
-      "A tree is a cyclic graph."
-    ]
+    "positions": {
+      "acyclic_connected_graph": {
+        "positive": "A tree is an acyclic connected graph.",
+        "negative": "A tree is not an acyclic connected graph."
+      },
+      "cyclic_graph": {
+        "positive": "A tree is a cyclic graph.",
+        "negative": "A tree is not a cyclic graph."
+      }
+    }
   },
   {
     "topic": "Company innovation",
     "type": "subjective",
-    "statements": [
-      "Apple is an innovative company.",
-      "Apple is not an innovative company.",
-      "Apple is not an uninnovative company.",
-      "Apple is an uninnovative company."
-    ]
+    "positions": {
+      "innovative": {
+        "positive": "Apple is an innovative company.",
+        "negative": "Apple is not an innovative company."
+      },
+      "uninnovative": {
+        "positive": "Apple is an uninnovative company.",
+        "negative": "Apple is not an uninnovative company."
+      }
+    }
   },
   {
     "topic": "Social media usefulness",
     "type": "subjective",
-    "statements": [
-      "Twitter is a useful platform for public discussion.",
-      "Twitter is not a useful platform for public discussion.",
-      "Twitter is not a useless platform for public discussion.",
-      "Twitter is a useless platform for public discussion."
-    ]
+    "positions": {
+      "useful": {
+        "positive": "Twitter is a useful platform for public discussion.",
+        "negative": "Twitter is not a useful platform for public discussion."
+      },
+      "useless": {
+        "positive": "Twitter is a useless platform for public discussion.",
+        "negative": "Twitter is not a useless platform for public discussion."
+      }
+    }
   },
   {
     "topic": "Smartphone quality",
     "type": "subjective",
-    "statements": [
-      "The iPhone is a high-quality smartphone.",
-      "The iPhone is not a high-quality smartphone.",
-      "The iPhone is not a low-quality smartphone.",
-      "The iPhone is a low-quality smartphone."
-    ]
+    "positions": {
+      "high_quality": {
+        "positive": "The iPhone is a high-quality smartphone.",
+        "negative": "The iPhone is not a high-quality smartphone."
+      },
+      "low_quality": {
+        "positive": "The iPhone is a low-quality smartphone.",
+        "negative": "The iPhone is not a low-quality smartphone."
+      }
+    }
   },
   {
     "topic": "Streaming content value",
     "type": "subjective",
-    "statements": [
-      "Netflix produces shows worth watching.",
-      "Netflix does not produce shows worth watching.",
-      "Netflix does not produce shows that are not worth watching.",
-      "Netflix produces shows that are not worth watching."
-    ]
+    "positions": {
+      "worth_watching": {
+        "positive": "Netflix produces shows worth watching.",
+        "negative": "Netflix does not produce shows worth watching."
+      },
+      "not_worth_watching": {
+        "positive": "Netflix produces shows that are not worth watching.",
+        "negative": "Netflix does not produce shows that are not worth watching."
+      }
+    }
   },
   {
     "topic": "Toyota reliability",
     "type": "subjective",
-    "statements": [
-      "Toyota makes reliable cars.",
-      "Toyota does not make reliable cars.",
-      "Toyota does not make unreliable cars.",
-      "Toyota makes unreliable cars."
-    ]
+    "positions": {
+      "reliable": {
+        "positive": "Toyota makes reliable cars.",
+        "negative": "Toyota does not make reliable cars."
+      },
+      "unreliable": {
+        "positive": "Toyota makes unreliable cars.",
+        "negative": "Toyota does not make unreliable cars."
+      }
+    }
   },
   {
     "topic": "Music quality",
     "type": "subjective",
-    "statements": [
-      "Taylor Swift makes great music.",
-      "Taylor Swift does not make great music.",
-      "Taylor Swift does not make terrible music.",
-      "Taylor Swift makes terrible music."
-    ]
+    "positions": {
+      "great_music": {
+        "positive": "Taylor Swift makes great music.",
+        "negative": "Taylor Swift does not make great music."
+      },
+      "terrible_music": {
+        "positive": "Taylor Swift makes terrible music.",
+        "negative": "Taylor Swift does not make terrible music."
+      }
+    }
   },
   {
     "topic": "Fast food quality",
     "type": "subjective",
-    "statements": [
-      "McDonald's food tastes good.",
-      "McDonald's food does not taste good.",
-      "McDonald's food does not taste bad.",
-      "McDonald's food tastes bad."
-    ]
+    "positions": {
+      "tastes_good": {
+        "positive": "McDonald's food tastes good.",
+        "negative": "McDonald's food does not taste good."
+      },
+      "tastes_bad": {
+        "positive": "McDonald's food tastes bad.",
+        "negative": "McDonald's food does not taste bad."
+      }
+    }
   },
   {
     "topic": "Fortnight quality",
     "type": "subjective",
-    "statements": [
-      "Fortnite is a fun game.",
-      "Fortnite is not a fun game.",
-      "Fortnite is not an unfun game.",
-      "Fortnite is an unfun game."
-    ]
+    "positions": {
+      "fun": {
+        "positive": "Fortnite is a fun game.",
+        "negative": "Fortnite is not a fun game."
+      },
+      "unfun": {
+        "positive": "Fortnite is an unfun game.",
+        "negative": "Fortnite is not an unfun game."
+      }
+    }
   },
   {
-    "topic": "Public speaking ability",
+    "topic": "Fieri public speaking ability",
     "type": "subjective",
-    "statements": [
-      "Elon Musk is a good public speaker.",
-      "Elon Musk is not a good public speaker.",
-      "Elon Musk is not a bad public speaker.",
-      "Elon Musk is a bad public speaker."
-    ]
+    "positions": {
+      "fieri_good_public_speaker": {
+        "positive": "Guy Fieri is a good public speaker.",
+        "negative": "Guy Fieri is not a good public speaker."
+      },
+      "fieri_bad_public_speaker": {
+        "positive": "Guy Fieri is a bad public speaker.",
+        "negative": "Guy Fieri is not a bad public speaker."
+      }
+    }
+  },
+  {
+    "topic": "Musk public speaking ability",
+    "type": "subjective",
+    "positions": {
+      "musk_good_public_speaker": {
+        "positive": "Elon Musk is a good public speaker.",
+        "negative": "Elon Musk is not a good public speaker."
+      },
+      "musk_bad_public_speaker": {
+        "positive": "Elon Musk is a bad public speaker.",
+        "negative": "Elon Musk is not a bad public speaker."
+      }
+    }
   },
   {
     "topic": "Capitalism effectiveness",
     "type": "subjective",
-    "statements": [
-      "Capitalism is an effective economic system.",
-      "Capitalism is not an effective economic system.",
-      "Capitalism is not an ineffective economic system.",
-      "Capitalism is an ineffective economic system."
-    ]
+    "positions": {
+      "effective": {
+        "positive": "Capitalism is an effective economic system.",
+        "negative": "Capitalism is not an effective economic system."
+      },
+      "ineffective": {
+        "positive": "Capitalism is an ineffective economic system.",
+        "negative": "Capitalism is not an ineffective economic system."
+      }
+    }
   },
   {
     "topic": "Socialism effectiveness",
     "type": "subjective",
-    "statements": [
-      "Socialism is an effective economic system.",
-      "Socialism is not an effective economic system.",
-      "Socialism is not an ineffective economic system.",
-      "Socialism is an ineffective economic system."
-    ]
+    "positions": {
+      "effective": {
+        "positive": "Socialism is an effective economic system.",
+        "negative": "Socialism is not an effective economic system."
+      },
+      "ineffective": {
+        "positive": "Socialism is an ineffective economic system.",
+        "negative": "Socialism is not an ineffective economic system."
+      }
+    }
   },
   {
-    "topic": "City livability",
+    "topic": "Communism effectiveness",
     "type": "subjective",
-    "statements": [
-      "New York City is a great place to live.",
-      "New York City is not a great place to live.",
-      "New York City is not a terrible place to live.",
-      "New York City is a terrible place to live."
-    ]
+    "positions": {
+      "effective": {
+        "positive": "Communism is an effective economic system.",
+        "negative": "Communism is not an effective economic system."
+      },
+      "ineffective": {
+        "positive": "Communism is an ineffective economic system.",
+        "negative": "Communism is not an ineffective economic system."
+      }
+    }
+  },
+  {
+    "topic": "NYC livability",
+    "type": "subjective",
+    "positions": {
+      "great_place_to_live": {
+        "positive": "New York City is a great place to live.",
+        "negative": "New York City is not a great place to live."
+      },
+      "terrible_place_to_live": {
+        "positive": "New York City is a terrible place to live.",
+        "negative": "New York City is not a terrible place to live."
+      }
+    }
+  },
+  {
+    "topic": "Boston livability",
+    "type": "subjective",
+    "positions": {
+      "great_place_to_live": {
+        "positive": "Boston is a great place to live.",
+        "negative": "Boston is not a great place to live."
+      },
+      "terrible_place_to_live": {
+        "positive": "Boston is a terrible place to live.",
+        "negative": "Boston is not a terrible place to live."
+      }
+    }
   },
   {
     "topic": "Online education quality",
     "type": "subjective",
-    "statements": [
-      "Online education is effective.",
-      "Online education is not effective.",
-      "Online education is not ineffective.",
-      "Online education is ineffective."
-    ]
+    "positions": {
+      "effective": {
+        "positive": "Online education is effective.",
+        "negative": "Online education is not effective."
+      },
+      "ineffective": {
+        "positive": "Online education is ineffective.",
+        "negative": "Online education is not ineffective."
+      }
+    }
   },
   {
     "topic": "Working from home productivity",
     "type": "subjective",
-    "statements": [
-      "Working from home increases productivity.",
-      "Working from home does not increase productivity.",
-      "Working from home does not decrease productivity.",
-      "Working from home decreases productivity."
-    ]
+    "positions": {
+      "increases_productivity": {
+        "positive": "Working from home increases productivity.",
+        "negative": "Working from home does not increase productivity."
+      },
+      "decreases_productivity": {
+        "positive": "Working from home decreases productivity.",
+        "negative": "Working from home does not decrease productivity."
+      }
+    }
   },
   {
     "topic": "In-person work productivity",
     "type": "subjective",
-    "statements": [
-      "Working in person increases productivity.",
-      "Working in person does not increase productivity.",
-      "Working in person does not decrease productivity.",
-      "Working in person decreases productivity."
-    ]
+    "positions": {
+      "increases_productivity": {
+        "positive": "Working in person increases productivity.",
+        "negative": "Working in person does not increase productivity."
+      },
+      "decreases_productivity": {
+        "positive": "Working in person decreases productivity.",
+        "negative": "Working in person does not decrease productivity."
+      }
+    }
   },
   {
     "topic": "Exercise benefit",
     "type": "fact-based",
-    "statements": [
-      "Regular exercise improves health.",
-      "Regular exercise does not improve health.",
-      "Regular exercise is not harmful to health.",
-      "Regular exercise is harmful to health."
-    ]
+    "positions": {
+      "improves_health": {
+        "positive": "Regular exercise improves health.",
+        "negative": "Regular exercise does not improve health."
+      },
+      "harmful_to_health": {
+        "positive": "Regular exercise is harmful to health.",
+        "negative": "Regular exercise is not harmful to health."
+      }
+    }
   },
   {
     "topic": "Earth shape",
     "type": "fact-based",
-    "statements": [
-      "The Earth is round.",
-      "The Earth is not round.",
-      "The Earth is not flat.",
-      "The Earth is flat."
-    ]
+    "positions": {
+      "round": {
+        "positive": "The Earth is round.",
+        "negative": "The Earth is not round."
+      },
+      "flat": {
+        "positive": "The Earth is flat.",
+        "negative": "The Earth is not flat."
+      }
+    }
   },
   {
     "topic": "Moon landing",
     "type": "fact-based",
-    "statements": [
-      "Humans have landed on the Moon.",
-      "Humans have not landed on the Moon.",
-      "Humans have not failed to land on the Moon.",
-      "Humans have failed to land on the Moon."
-    ]
+    "positions": {
+      "landed_on_moon": {
+        "positive": "Humans have landed on the Moon.",
+        "negative": "Humans have not landed on the Moon."
+      },
+      "failed_to_land_on_moon": {
+        "positive": "Humans have failed to land on the Moon.",
+        "negative": "Humans have not failed to land on the Moon."
+      }
+    }
+  },
+
+
+
+
+  {
+    "topic": "OpenAI effective",
+    "type": "subjective",
+    "positions": {
+      "openAI_best": {
+        "positive": "OpenAI language models are the best language models.",
+        "negative": "OpenAI language models are not the best language models."
+      },
+      "openAI_worst": {
+        "positive": "OpenAI language models are the worst language models.",
+        "negative": "OpenAI language models are not the worst language models."
+      }
+    }
+  },
+
+  {
+    "topic": "Ollama effective",
+    "type": "subjective",
+    "positions": {
+      "openAI_best": {
+        "positive": "Ollama language models are the best language models.",
+        "negative": "Ollama language models are not the best language models."
+      },
+      "openAI_worst": {
+        "positive": "Ollama language models are the worst language models.",
+        "negative": "Ollama language models are not the worst language models."
+      }
+    }
+  },
+  {
+    "topic": "Ollama effective",
+    "type": "subjective",
+    "positions": {
+      "ollama_best": {
+        "positive": "Ollama language models are the best language models.",
+        "negative": "Ollama language models are not the best language models."
+      },
+      "ollama_worst": {
+        "positive": "Ollama language models are the worst language models.",
+        "negative": "Ollama language models are not the worst language models."
+      }
+    }
+  },
+  {
+    "topic": "Claude effective",
+    "type": "subjective",
+    "positions": {
+      "claude_best": {
+        "positive": "Claude language models are the best language models.",
+        "negative": "Claude language models are not the best language models."
+      },
+      "claude_worst": {
+        "positive": "Claude language models are the worst language models.",
+        "negative": "Claude language models are not the worst language models."
+      }
+    }
   },
   {
     "topic": "Vaccination effectiveness",
     "type": "fact-based",
-    "statements": [
-      "Vaccines are effective at preventing disease.",
-      "Vaccines are not effective at preventing disease.",
-      "Vaccines are not ineffective at preventing disease.",
-      "Vaccines are ineffective at preventing disease."
-    ]
-  },
-    {
-        "topic": "Hot dog classification",
-        "type": "subjective",
-        "statements": [
-        "A hot dog is a sandwich.",
-        "A hot dog is not a sandwich.",
-        "A hot dog is not a taco.",
-        "A hot dog is a taco."
-        ]
-    },
-    {
-        "topic": "Straw usage",
-        "type": "subjective",
-        "statements": [
-        "Using a straw improves the taste of a drink.",
-        "Using a straw does not improve the taste of a drink.",
-        "Using a straw does not worsen the taste of a drink.",
-        "Using a straw worsens the taste of a drink."
-        ]
-    },
-    {
-        "topic": "Pineapple on pizza",
-        "type": "subjective",
-        "statements": [
-        "Pineapple belongs on pizza.",
-        "Pineapple does not belong on pizza.",
-        "Pineapple is not out of place on pizza.",
-        "Pineapple is out of place on pizza."
-        ]
-    },
-    {
-        "topic": "Toilet paper orientation",
-        "type": "subjective",
-        "statements": [
-        "Toilet paper should hang over the roll.",
-        "Toilet paper should not hang over the roll.",
-        "Toilet paper should not hang under the roll.",
-        "Toilet paper should hang under the roll."
-        ]
-    },
-    {
-        "topic": "Water wetness",
-        "type": "subjective",
-        "statements": [
-        "Water is wet.",
-        "Water is not wet.",
-        "Water is not dry.",
-        "Water is dry."
-        ]
-    },
-    {
-        "topic": "Leftovers temperature",
-        "type": "subjective",
-        "statements": [
-        "Cold pizza is better than hot pizza.",
-        "Cold pizza is not better than hot pizza.",
-        "Cold pizza is not worse than hot pizza.",
-        "Cold pizza is worse than hot pizza."
-        ]
-    },
-    {
-        "topic": "GIF pronunciation",
-        "type": "subjective",
-        "statements": [
-        "GIF is pronounced with a soft G.",
-        "GIF is not pronounced with a soft G.",
-        "GIF is not pronounced with a hard G.",
-        "GIF is pronounced with a hard G."
-        ]
-    },
-    {
-        "topic": "Socks and sandals",
-        "type": "subjective",
-        "statements": [
-        "Socks with sandals are fashionable.",
-        "Socks with sandals are not fashionable.",
-        "Socks with sandals are not unfashionable.",
-        "Socks with sandals are unfashionable."
-        ]
-    },
-    {
-        "topic": "Bread heel",
-        "type": "subjective",
-        "statements": [
-        "The heel of the bread loaf is the best slice.",
-        "The heel of the bread loaf is not the best slice.",
-        "The heel of the bread loaf is not the worst slice.",
-        "The heel of the bread loaf is the worst slice."
-        ]
-    },
-    {
-        "topic": "Typing spaces",
-        "type": "subjective",
-        "statements": [
-        "Two spaces after a period is correct.",
-        "Two spaces after a period is not correct.",
-        "Two spaces after a period is not incorrect.",
-        "Two spaces after a period is incorrect."
-        ]
-    },
-    {
-        "topic": "Shower timing",
-        "type": "subjective",
-        "statements": [
-        "Morning showers are better than night showers.",
-        "Morning showers are not better than night showers.",
-        "Morning showers are not worse than night showers.",
-        "Morning showers are worse than night showers."
-        ]
-    },
-    {
-        "topic": "Seat choice",
-        "type": "subjective",
-        "statements": [
-        "The window seat is the best seat on a plane.",
-        "The window seat is not the best seat on a plane.",
-        "The window seat is not the worst seat on a plane.",
-        "The window seat is the worst seat on a plane."
-        ]
-    },
-    {
-        "topic": "Book vs movie",
-        "type": "subjective",
-        "statements": [
-        "The book is always better than the movie.",
-        "The book is not always better than the movie.",
-        "The book is not always worse than the movie.",
-        "The book is always worse than the movie."
-        ]
-    },
-    {
-        "topic": "Chocolate preference",
-        "type": "subjective",
-        "statements": [
-        "Dark chocolate tastes better than milk chocolate.",
-        "Dark chocolate does not taste better than milk chocolate.",
-        "Dark chocolate does not taste worse than milk chocolate.",
-        "Dark chocolate tastes worse than milk chocolate."
-        ]
+    "positions": {
+      "effective": {
+        "positive": "Vaccines are effective at preventing disease.",
+        "negative": "Vaccines are not effective at preventing disease."
+      },
+      "ineffective": {
+        "positive": "Vaccines are ineffective at preventing disease.",
+        "negative": "Vaccines are not ineffective at preventing disease."
+      }
     }
+  },
+  {
+    "topic": "Hot dog classification",
+    "type": "subjective",
+    "positions": {
+      "sandwich": {
+        "positive": "A hot dog is a sandwich.",
+        "negative": "A hot dog is not a sandwich."
+      },
+      "taco": {
+        "positive": "A hot dog is a taco.",
+        "negative": "A hot dog is not a taco."
+      }
+    }
+  },
+  {
+    "topic": "Straw usage",
+    "type": "subjective",
+    "positions": {
+      "improves_taste": {
+        "positive": "Using a straw improves the taste of a drink.",
+        "negative": "Using a straw does not improve the taste of a drink."
+      },
+      "worsens_taste": {
+        "positive": "Using a straw worsens the taste of a drink.",
+        "negative": "Using a straw does not worsen the taste of a drink."
+      }
+    }
+  },
+  {
+    "topic": "Pineapple on pizza",
+    "type": "subjective",
+    "positions": {
+      "belongs": {
+        "positive": "Pineapple belongs on pizza.",
+        "negative": "Pineapple does not belong on pizza."
+      },
+      "out_of_place": {
+        "positive": "Pineapple is out of place on pizza.",
+        "negative": "Pineapple is not out of place on pizza."
+      }
+    }
+  },
+  {
+    "topic": "Toilet paper orientation",
+    "type": "subjective",
+    "positions": {
+      "over": {
+        "positive": "Toilet paper should hang over the roll.",
+        "negative": "Toilet paper should not hang over the roll."
+      },
+      "under": {
+        "positive": "Toilet paper should hang under the roll.",
+        "negative": "Toilet paper should not hang under the roll."
+      }
+    }
+  },
+  {
+    "topic": "Water wetness",
+    "type": "subjective",
+    "positions": {
+      "wet": {
+        "positive": "Water is wet.",
+        "negative": "Water is not wet."
+      },
+      "dry": {
+        "positive": "Water is dry.",
+        "negative": "Water is not dry."
+      }
+    }
+  },
+  {
+    "topic": "Leftovers temperature",
+    "type": "subjective",
+    "positions": {
+      "cold_better_than_hot": {
+        "positive": "Cold pizza is better than hot pizza.",
+        "negative": "Cold pizza is not better than hot pizza."
+      },
+      "cold_worse_than_hot": {
+        "positive": "Cold pizza is worse than hot pizza.",
+        "negative": "Cold pizza is not worse than hot pizza."
+      }
+    }
+  },
+  {
+    "topic": "GIF pronunciation",
+    "type": "subjective",
+    "positions": {
+      "soft_g": {
+        "positive": "GIF is pronounced with a soft G.",
+        "negative": "GIF is not pronounced with a soft G."
+      },
+      "hard_g": {
+        "positive": "GIF is pronounced with a hard G.",
+        "negative": "GIF is not pronounced with a hard G."
+      }
+    }
+  },
+  {
+    "topic": "Socks and sandals",
+    "type": "subjective",
+    "positions": {
+      "fashionable": {
+        "positive": "Socks with sandals are fashionable.",
+        "negative": "Socks with sandals are not fashionable."
+      },
+      "unfashionable": {
+        "positive": "Socks with sandals are unfashionable.",
+        "negative": "Socks with sandals are not unfashionable."
+      }
+    }
+  },
+  {
+    "topic": "Bread heel",
+    "type": "subjective",
+    "positions": {
+      "best_slice": {
+        "positive": "The heel of the bread loaf is the best slice.",
+        "negative": "The heel of the bread loaf is not the best slice."
+      },
+      "worst_slice": {
+        "positive": "The heel of the bread loaf is the worst slice.",
+        "negative": "The heel of the bread loaf is not the worst slice."
+      }
+    }
+  },
+  {
+    "topic": "Typing spaces",
+    "type": "subjective",
+    "positions": {
+      "correct": {
+        "positive": "Two spaces after a period is correct.",
+        "negative": "Two spaces after a period is not correct."
+      },
+      "incorrect": {
+        "positive": "Two spaces after a period is incorrect.",
+        "negative": "Two spaces after a period is not incorrect."
+      }
+    }
+  },
+  {
+    "topic": "Shower timing",
+    "type": "subjective",
+    "positions": {
+      "morning_better_than_night": {
+        "positive": "Morning showers are better than night showers.",
+        "negative": "Morning showers are not better than night showers."
+      },
+      "morning_worse_than_night": {
+        "positive": "Morning showers are worse than night showers.",
+        "negative": "Morning showers are not worse than night showers."
+      }
+    }
+  },
+  {
+    "topic": "Seat choice",
+    "type": "subjective",
+    "positions": {
+      "window_best_seat": {
+        "positive": "The window seat is the best seat on a plane.",
+        "negative": "The window seat is not the best seat on a plane."
+      },
+      "window_worst_seat": {
+        "positive": "The window seat is the worst seat on a plane.",
+        "negative": "The window seat is not the worst seat on a plane."
+      }
+    }
+  },
+  {
+    "topic": "Book vs movie",
+    "type": "subjective",
+    "positions": {
+      "book_always_better": {
+        "positive": "The book is always better than the movie.",
+        "negative": "The book is not always better than the movie."
+      },
+      "book_always_worse": {
+        "positive": "The book is always worse than the movie.",
+        "negative": "The book is not always worse than the movie."
+      }
+    }
+  },
+  {
+    "topic": "Chocolate preference",
+    "type": "subjective",
+    "positions": {
+      "dark_better_than_milk": {
+        "positive": "Dark chocolate tastes better than milk chocolate.",
+        "negative": "Dark chocolate does not taste better than milk chocolate."
+      },
+      "dark_worse_than_milk": {
+        "positive": "Dark chocolate tastes worse than milk chocolate.",
+        "negative": "Dark chocolate does not taste worse than milk chocolate."
+      }
+    }
+  }
 ]

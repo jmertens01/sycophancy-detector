@@ -3,9 +3,9 @@
 import json
 import logging
 from pathlib import Path
-from typing import Optional
 
 import numpy as np
+import pandas as pd
 from ollama import ChatResponse, chat
 from tqdm import tqdm
 
@@ -18,9 +18,9 @@ class PreferenceDataGenerator:
     def __init__(self, logger: logging.Logger | None = None) -> None:
         """Initialize a preference data generator object."""
         self.logger = logger or logging.getLogger(__name__)
-        self.statements = []
+        self.statements = pd.DataFrame()
 
-    def ask_ollama(self, prompt: str) -> ChatResponse:
+    def ask_model(self, prompt: str, model: str = "llama3.1") -> ChatResponse:
         """Request a response from Ollama.
 
         Arguments:
@@ -31,7 +31,7 @@ class PreferenceDataGenerator:
 
         """
         response: ChatResponse = chat(
-            model="llama3.1",
+            model=model,
             messages=[
                 {
                     "role": "user",
@@ -72,7 +72,7 @@ class PreferenceDataGenerator:
             attempts = 0
             bad_output = True
             while bad_output and attempts < tries_per_query:
-                raw_response = self.ask_ollama(query)
+                raw_response = self.ask_model(query)
                 response = raw_response.message["content"].lower().strip()
                 attempts += 1
                 bad_output = "agree" not in response.split(" ", maxsplit=1)[0]
@@ -104,12 +104,13 @@ class PreferenceDataGenerator:
         """
         i = 0
         responses = []
+        print(f"{pressure = }")
         query = prompt_func_dict["binary"][pressure](statement)
         while i < n:
             response = ""
             attempts = 0
             while response not in ["agree", "disagree"] and attempts < tries_per_query:
-                raw_response = self.ask_ollama(query)
+                raw_response = self.ask_model(query)
                 response = raw_response.message["content"].lower().strip()
                 attempts += 1
 
@@ -164,7 +165,7 @@ class PreferenceDataGenerator:
         self,
         n: int,
         pressure: str,
-    ) -> dict:
+    ) -> None:
         """Generate binary responses (dis/agree) for a list of statements.
 
         Arguments:
@@ -178,22 +179,27 @@ class PreferenceDataGenerator:
             Dictionary of the LLM's responses to each statements.
 
         """
-        question_dict = {}
-
-        for question in tqdm(self.statements, "Retrieving Ollama responses"):
+        print(f"{pressure = }")
+        all_str_responses = []
+        all_bin_responses = []
+        print(self.statements)
+        for _, question_cat in tqdm(
+            self.statements.iterrows(),
+            "Retrieving Ollama responses",
+        ):
             str_responses = self.retrieve_n_binary_responses(
-                question,
+                question_cat["question"],
                 n=n,
                 pressure=pressure,
             )
-            num_responses = self.binary_response_to_number(str_responses)
-            question_dict[question] = {
-                "str_responses": str_responses,
-                "num_responses": num_responses,
-                "prop_agree": np.average(num_responses),
-            }
+            all_str_responses.append(str_responses)
 
-        return question_dict
+            num_responses = self.binary_response_to_number(str_responses)
+
+            all_bin_responses.append(num_responses)
+
+        self.statements[f"binary_str_responses_{pressure}"] = all_str_responses
+        self.statements[f"binary_int_responses_{pressure}"] = all_bin_responses
 
     def open_for_all_qs(
         self,
@@ -234,7 +240,7 @@ class PreferenceDataGenerator:
         self,
         n_samples: int,
         file_base: str,
-        output_dir: Optional[Path] = None,
+        output_dir: Path | None = None,
     ) -> None:
         """Generate all open responses for all statements.
 
@@ -248,21 +254,21 @@ class PreferenceDataGenerator:
             None.
 
         """
+        output_dir = output_dir or Path.cwd()
         for pressure_type in prompt_func_dict["bin_open"]:
             open_question_dict = self.open_for_all_qs(
                 n_samples,
                 pressure_type,
             )
             with Path(
-                output_dir / f"{file_base}_{pressure_type}_{n_samples}.json"
+                output_dir / f"{file_base}_{pressure_type}_{n_samples}.json",
             ).open("w") as f:
                 json.dump(open_question_dict, f, indent=4)
 
     def generate_all_binary(
         self,
         n_samples: int,
-        file_base: str,
-        output_dir: Optional[Path] = None,
+        output_dir: Path,
     ) -> None:
         """Generate all binary responses for all statements.
 
@@ -277,23 +283,102 @@ class PreferenceDataGenerator:
 
         """
         for pressure_type in prompt_func_dict["binary"]:
-            binary_question_dict = self.binary_for_all_qs(
+            self.binary_for_all_qs(
                 n_samples,
                 pressure_type,
             )
+            intermed = self.statements.to_json()
 
             with Path(
-                output_dir / f"{file_base}_{pressure_type}_{n_samples}.json"
+                output_dir / f"binary_{n_samples}_{pressure_type}_intermed.json",
             ).open("w") as f:
-                json.dump(binary_question_dict, f, indent=4)
+                json.dump(intermed, f, indent=4)
+
+    def json_to_statements(self, data) -> None:
+        topic_list = []
+        position_list = []
+        q_type_list = []
+        q_list = []
+
+        for q_type in data:
+            topic = q_type["topic"]
+            positions = q_type["positions"]
+            for position in positions:
+                negative_q = positions[position]["negative"]
+                topic_list.append(topic)
+                position_list.append(position)
+                q_type_list.append("negative")
+                q_list.append(negative_q)
+
+                positive_q = positions[position]["positive"]
+                topic_list.append(topic)
+                position_list.append(position)
+                q_type_list.append("negative")
+                q_list.append(positive_q)
+
+        self.statements = pd.DataFrame(
+            {
+                "topic": topic_list,
+                "statement_position": position_list,
+                "polarity": q_type_list,
+                "question": q_list,
+            },
+        )
 
     def read_json_statements(self, statements_path: Path) -> None:
         """Load and add statements from json file."""
         with statements_path.open("r") as f:
-            all_queries = json.load(f)
+            file = json.load(f)
+        self.json_to_statements(file)
 
-        for query in tqdm(all_queries, "Processing json file."):
-            self.statements.extend(query["statements"])
+    def compare_same_query(
+        self,
+        query: str,
+        n_samples: int = 5,
+    ) -> pd.DataFrame:
+        direct = self.run_one_usr_query_bin(
+            query=query, pressure="basic", samples=n_samples
+        )
+        direct_num = self.binary_response_to_number(direct)
+
+        positioned = self.run_one_usr_query_bin(
+            query=query, pressure="positioned", samples=n_samples
+        )
+        positioned_num = self.binary_response_to_number(positioned)
+
+        pushy = self.run_one_usr_query_bin(
+            query=query, pressure="pushy", samples=n_samples
+        )
+        pushy_num = self.binary_response_to_number(pushy)
+
+        we = self.run_one_usr_query_bin(query=query, pressure="we", samples=n_samples)
+        we_num = self.binary_response_to_number(we)
+
+        return pd.DataFrame(
+            {
+                "type": ["direct", "positioned", "pushy", "we"],
+                "proportion": [
+                    np.mean(direct_num),
+                    np.mean(positioned_num),
+                    np.mean(pushy_num),
+                    np.mean(we_num),
+                ],
+            },
+        )
+
+    def run_one_usr_query_bin(
+        self,
+        query: str,
+        pressure: str,
+        samples: int = 10,
+    ):
+        """Run binary response for one user query."""
+        answers = self.retrieve_n_binary_responses(
+            query,
+            samples,
+            pressure,
+        )
+        return answers
 
 
 def main(statements_path: Path, stem: str | None = "") -> None:
@@ -313,13 +398,22 @@ def main(statements_path: Path, stem: str | None = "") -> None:
     preference_data_generator = PreferenceDataGenerator()
     preference_data_generator.read_json_statements(statements_path)
 
-    n_samples = 20
+    n_samples = 30
+    output_dir = Path.cwd() / "comp_data"
 
     # Binary responses
     preference_data_generator.generate_all_binary(
         n_samples,
         f"{stem}binary",
+        output_dir,
     )
+
+    json_data = preference_data_generator.statements.to_json()
+
+    with Path(
+        output_dir / f"all_binary_{n_samples}.json",
+    ).open("w") as f:
+        json.dump(json_data, f, indent=4)
 
 
 if __name__ == "__main__":

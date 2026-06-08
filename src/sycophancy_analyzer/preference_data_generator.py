@@ -89,6 +89,7 @@ class PreferenceDataGenerator:
         n: int,
         pressure: str,
         tries_per_query: int = 3,
+        model: str = "",
     ) -> list[str]:
         """Sample a set of binary LLM responses [(dis)agree] to a statement.
 
@@ -110,7 +111,9 @@ class PreferenceDataGenerator:
             response = ""
             attempts = 0
             while response not in ["agree", "disagree"] and attempts < tries_per_query:
-                raw_response = self.ask_model(query)
+                if model == "":
+                    model = "llama3.1"
+                raw_response = self.ask_model(query, model)
                 response = raw_response.message["content"].lower().strip()
                 attempts += 1
 
@@ -165,6 +168,7 @@ class PreferenceDataGenerator:
         self,
         n: int,
         pressure: str,
+        model: str = "",
     ) -> None:
         """Generate binary responses (dis/agree) for a list of statements.
 
@@ -189,6 +193,7 @@ class PreferenceDataGenerator:
                 question_cat["question"],
                 n=n,
                 pressure=pressure,
+                model=model,
             )
             all_str_responses.append(str_responses)
 
@@ -267,6 +272,7 @@ class PreferenceDataGenerator:
         self,
         n_samples: int,
         output_dir: Path,
+        model: str = "",
     ) -> None:
         """Generate all binary responses for all statements.
 
@@ -284,6 +290,7 @@ class PreferenceDataGenerator:
             self.binary_for_all_qs(
                 n_samples,
                 pressure_type,
+                model,
             )
             intermed = self.statements.to_json()
 
@@ -334,12 +341,14 @@ class PreferenceDataGenerator:
         self,
         query: str,
         n_samples: int = 5,
+        model="",
     ) -> pd.DataFrame:
         """Retrieve all binary responses for one single query."""
         direct = self.retrieve_n_binary_responses(
             query,
             n_samples,
             "basic",
+            model=model,
         )
         direct_num = self.binary_response_to_number(direct)
 
@@ -347,6 +356,7 @@ class PreferenceDataGenerator:
             query,
             n_samples,
             "positioned",
+            model=model,
         )
         positioned_num = self.binary_response_to_number(positioned)
 
@@ -354,6 +364,7 @@ class PreferenceDataGenerator:
             query,
             n_samples,
             "pushy",
+            model=model,
         )
         pushy_num = self.binary_response_to_number(pushy)
 
@@ -361,6 +372,7 @@ class PreferenceDataGenerator:
             query,
             n_samples,
             "we",
+            model=model,
         )
         we_num = self.binary_response_to_number(we)
 
@@ -375,6 +387,44 @@ class PreferenceDataGenerator:
                 ],
             },
         )
+
+    def binary_wrapper(self, n_samples, output_dir, stem: str = "", model: str = ""):
+        print(f"{stem = }")
+        # Binary responses
+        self.generate_all_binary(
+            n_samples,
+            output_dir,
+            model,
+        )
+
+        json_data = self.statements.to_json()
+
+        with Path(
+            output_dir / f"{stem}all_binary_{n_samples}.json",
+        ).open("w") as f:
+            json.dump(json_data, f, indent=4)
+
+
+def main_ollama_3b(statements_path: Path, stem: str | None = "") -> None:
+    """Generate data for preference analysis.
+
+    Saves the data locally.
+
+    Arguments:
+        statements_path (Path): Path to a json file that contains
+           the statements to use to generate prompts.
+        stem (str, Optional): A stem to add to output files.
+
+    Returns:
+        None.
+
+    """
+    preference_data_generator = PreferenceDataGenerator()
+    preference_data_generator.read_json_statements(statements_path)
+
+    n_samples = 30
+    output_dir = Path.cwd() / "comp_data"
+    preference_data_generator.binary_wrapper(n_samples, output_dir, stem)
 
 
 def main(statements_path: Path, stem: str | None = "") -> None:
@@ -397,19 +447,18 @@ def main(statements_path: Path, stem: str | None = "") -> None:
     n_samples = 30
     output_dir = Path.cwd() / "comp_data"
 
-    # Binary responses
-    preference_data_generator.generate_all_binary(
-        n_samples,
-        f"{stem}binary",
-        output_dir,
-    )
+    models = [
+        # "llama3.2:1b",
+        # "llama3.2:3b",
+        # "gemma3:1b",
+        # "gemma3:4b",
+        "phi3",
+    ]
 
-    json_data = preference_data_generator.statements.to_json()
-
-    with Path(
-        output_dir / f"all_binary_{n_samples}.json",
-    ).open("w") as f:
-        json.dump(json_data, f, indent=4)
+    for model in models:
+        preference_data_generator.binary_wrapper(
+            n_samples, output_dir, stem + model, model
+        )
 
 
 if __name__ == "__main__":

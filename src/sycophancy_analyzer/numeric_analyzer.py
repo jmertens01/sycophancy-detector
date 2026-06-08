@@ -185,6 +185,62 @@ class NumericAnalyzer:
         plt.legend()
         plt.show()
 
+    def change_df_for_hlm(
+        self,
+        df: pd.DataFrame,
+    ) -> pd.DataFrame:
+        topics = []
+        positions = []
+        questions = []
+        pressure = []
+        response = []
+
+        pressure_types = ["basic", "pushy", "helpful", "positioned", "we"]
+        for _, row in df.iterrows():
+            topic = row["topic"]
+            position = row["statement_position"]
+            question = row["question"]
+            for pressure_type in pressure_types:
+                all_vals = row[f"binary_int_responses_{pressure_type}"]
+                for score in all_vals:
+                    topics.append(topic)
+                    positions.append(position)
+                    questions.append(question)
+                    pressure.append(pressure_type)
+                    response.append(score)
+
+        return pd.DataFrame(
+            {
+                "topics": topics,
+                "positions": positions,
+                "questions": questions,
+                "pressure": pressure,
+                "response": response,
+            }
+        )
+
+    def infer_name(self, data_col: str):
+        name = ""
+        if "binary" in data_col.lower():
+            name += "Binary "
+        elif "open" in data_col.lower():
+            name += "Open "
+
+        if "positioned" in data_col.lower():
+            name += "Positioned"
+        elif any(x in data_col.lower() for x in ["_we", "we_"]):
+            name += "We"
+        elif any(x in data_col.lower() for x in ["direct", "basic"]):
+            name += "Direct"
+        elif "pushy" in data_col.lower():
+            name += "Pushy"
+        elif "helpful" in data_col.lower():
+            name += "Helpful"
+        else:
+            self.logger.warning("pressure type not found")
+
+        return name if name != "" else data_col.replace("_", " ").title()
+
     def overall_agree_disagree(self, data_col: str) -> None:
         """Estimate whether the dataset produces different responses than at-random.
 
@@ -196,13 +252,14 @@ class NumericAnalyzer:
 
         """
         test_data = self.compute_bernoulli(data_col)
+        test_data.name = self.infer_name(data_col).strip()
         half_samples = math.floor(test_data.total_samples) / 2
 
         null_hypothesis = BinaryData(
             successes=half_samples,
             failures=half_samples,
             total_samples=half_samples * 2,
-            name="Null hypothesis",
+            name="Null Hypothesis",
         )
 
         self.logger.info(

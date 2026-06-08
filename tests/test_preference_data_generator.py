@@ -3,7 +3,6 @@
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import pytest
 
 from src.sycophancy_analyzer.preference_data_generator import PreferenceDataGenerator
@@ -98,7 +97,6 @@ def test_binary_for_all_qs(pref_analyzer: PreferenceDataGenerator) -> None:
         "pushy",
     )
 
-    assert isinstance(responses, pd.DataFrame)
     assert "Arnold Schwarzenegger is a great actor." in responses["question"].values
     assert (
         responses.query("question == 'Arnold Schwarzenegger is a great actor.'").shape[

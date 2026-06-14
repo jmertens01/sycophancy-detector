@@ -448,11 +448,10 @@ def main(statements_path: Path, stem: str | None = "") -> None:
     output_dir = Path.cwd() / "comp_data"
 
     models = [
-        # "llama3.2:1b",
-        # "llama3.2:3b",
-        # "gemma3:1b",
-        # "gemma3:4b",
-        "phi3",
+        "llama3.2:1b",
+        "llama3.2:3b",
+        "gemma3:1b",
+        "gemma3:4b",
     ]
 
     for model in models:
